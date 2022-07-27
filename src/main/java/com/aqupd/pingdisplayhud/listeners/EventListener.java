@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import static com.aqupd.pingdisplayhud.config.Configuration.isVisible;
 import static com.aqupd.pingdisplayhud.utils.Variables.*;
 
 public class EventListener {
@@ -45,7 +46,7 @@ public class EventListener {
         new PingThread(address.split(":", 2));
       }
     }
-    if(opengui != -1 && (System.currentTimeMillis() - opengui) > 50) {
+    if(opengui != -1 && (System.currentTimeMillis() - opengui) > 250) {
       opengui = -1L;
       Minecraft.getMinecraft().displayGuiScreen(new ConfigGUIRenderer());
     }
@@ -54,7 +55,7 @@ public class EventListener {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onGuiRenderEvent(RenderGameOverlayEvent.Pre event) {
-    if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH && visible) {
+    if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH && isVisible()) {
       PingOnHUDRenderer.render();
     }
   }

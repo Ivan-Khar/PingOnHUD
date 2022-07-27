@@ -7,10 +7,15 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Main.MODID, version = "${version}")
+import static com.aqupd.pingdisplayhud.config.Configuration.loadOptions;
+
+@Mod(modid = Main.MODID)
 public class Main {
     public static final String MODID = "pingdisplayhud";
+    public static final Logger LOGGER = LogManager.getLogger("AqUpd's Ping on HUD");
     private final EventListener eventListener;
 
     public Main() {
@@ -20,6 +25,7 @@ public class Main {
     @EventHandler
     public void init(FMLInitializationEvent event) {
 		// some example code
+        loadOptions();
         MinecraftForge.EVENT_BUS.register(eventListener);
         ClientCommandHandler.instance.registerCommand(new PingHUDCommand());
     }

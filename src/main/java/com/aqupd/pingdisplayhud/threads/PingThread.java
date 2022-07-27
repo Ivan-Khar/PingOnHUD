@@ -40,7 +40,6 @@ public class PingThread{
               totalPing = totalPing + ping;
             }
             ping = totalPing / pings.size();
-            System.out.println(pings);
           } catch (IOException ignored) {}
           triggerTime = System.currentTimeMillis();
         }
