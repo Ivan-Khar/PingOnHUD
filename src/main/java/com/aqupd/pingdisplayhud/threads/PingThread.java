@@ -11,42 +11,30 @@ import java.util.List;
 import static com.aqupd.pingdisplayhud.utils.Variables.*;
 
 public class PingThread{
-  String[] ipPort;
+  String ip;
   TickEvent.PlayerTickEvent event;
-  OldServerPinger pinger;
-  public PingThread(String[] ipPort, TickEvent.PlayerTickEvent ev){
-    this.ipPort = ipPort;
+  public PingThread(String ip, TickEvent.PlayerTickEvent ev){
+    this.ip = ip;
     this.event = ev;
     isThreadRunning = true;
     new RunningThread().start();
-    this.pinger = new OldServerPinger();
   }
 
   private class RunningThread extends Thread {
     @Override
     public void run() {
       long triggerTime = System.currentTimeMillis();
-      List<Long> pings = new LinkedList<>();
-      ServerData server = null;
+      ServerData server = new ServerData("test", ip, false);
       do {
-        if ((System.currentTimeMillis() - triggerTime > 750)) {
+        if ((System.currentTimeMillis() - triggerTime) > 5000) {
           try {
-            if(server != null && server.pingToServer > 0) {
-              long totalPing = 0L;
-              pings.add(server.pingToServer);
-              if (pings.size() == 4) pings.remove(0);
-              for (Long ping : pings) {
-                totalPing = totalPing + ping;
-              }
-              ping = totalPing / pings.size();
-            }
-            server = new ServerData("test", ipPort[0] + ":" + ipPort[1], false);
+            if(server.pingToServer > 0) { ping = server.pingToServer; }
             pinger.ping(server);
+            triggerTime = System.currentTimeMillis();
           } catch (UnknownHostException e) {
             System.out.println("Exception: " + e);
             e.printStackTrace();
           }
-          triggerTime = System.currentTimeMillis();
         }
       } while(!shouldCloseThread);
 

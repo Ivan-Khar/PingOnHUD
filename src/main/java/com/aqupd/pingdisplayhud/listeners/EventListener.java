@@ -5,7 +5,6 @@ import com.aqupd.pingdisplayhud.client.PingHUDRenderer;
 import com.aqupd.pingdisplayhud.threads.PingThread;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -24,7 +23,7 @@ public class EventListener {
   @SubscribeEvent
   public void onPlayerJoinServer(FMLNetworkEvent.ClientConnectedToServerEvent event) {
     if (!event.isLocal) {
-      address = event.manager.getRemoteAddress().toString().substring(event.manager.getRemoteAddress().toString().indexOf("/")+1);
+      address = event.manager.getRemoteAddress().toString().substring(0, event.manager.getRemoteAddress().toString().indexOf("/"));
       shouldStartThread = true;
     }
   }
@@ -35,6 +34,7 @@ public class EventListener {
     shouldCloseThread = true;
     shouldStartThread = false;
     ping = 0L;
+    pinger.clearPendingNetworks();
   }
 
   @SideOnly(Side.CLIENT)
@@ -44,7 +44,7 @@ public class EventListener {
       if (!isThreadRunning && shouldStartThread) {
         shouldCloseThread = false;
         shouldStartThread = false;
-        new PingThread(address.split(":", 2), event);
+        new PingThread(address, event);
       }
     }
     if(opengui != -1 && (System.currentTimeMillis() - opengui) > 250) {

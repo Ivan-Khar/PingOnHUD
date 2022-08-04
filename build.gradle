@@ -27,11 +27,6 @@ minecraft {
     makeObfSourceJar = false
 }
 
-configurations {
-    include
-    implementation.extendsFrom(include)
-}
-
 repositories {
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
