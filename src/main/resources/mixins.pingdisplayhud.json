@@ -1,6 +1,0 @@
-{
-  "package": "com.aqupd.pingdisplayhud.mixins",
-  "refmap": "mixins.pingdisplayhud.refmap.json",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": []
-}
