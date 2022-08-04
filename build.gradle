@@ -1,21 +1,16 @@
 buildscript {
     repositories {
         maven { url 'https://jitpack.io' }
-        //maven { url 'https://repo.spongepowered.org/maven' }
         maven { url 'https://maven.minecraftforge.net/' }
     }
 
     dependencies {
         classpath "com.github.asbyth:ForgeGradle:6f53277"
-        //classpath 'com.github.xcfrg:MixinGradle:0.6-SNAPSHOT'
-        //classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle.forge'
-//apply plugin: 'org.spongepowered.mixin'
-//apply plugin: 'com.github.johnrengelman.shadow'
 
 version = "1.0"
 group = "com.aqupd.pingdisplayhud"
@@ -45,48 +40,7 @@ repositories {
 }
 
 dependencies {
-    /*
-    include("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
-
-        exclude module: "guava"
-        exclude module: "commons-io"
-        exclude module: "gson"
-        exclude module: "launchwrapper"
-    }
-    annotationProcessor "org.spongepowered:mixin:0.7.11-SNAPSHOT"
-    */
 }
-
-reobf {
-    //shadowJar {
-    //    classpath = sourceSets.main.compileClasspath
-    //}
-}
-
-//mixin {
-//    add sourceSets.main, "mixins.pingdisplayhud.refmap.json"
-//}
-
-//shadowJar {
-//    archiveFileName = jar.archiveFileName
-//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-//    configurations = [project.configurations.include]
-//}
-
-jar {
-    /*
-    manifest.attributes(
-        "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-        "MixinConfigs": "mixins.pingdisplayhud.json",
-        "FMLCorePluginContainsFMLMod": true,
-        "ForceLoadAsMod": true
-    )
-    */
-
-    enabled = false
-}
-
-//tasks.reobfJar.dependsOn(tasks.shadowJar)
 
 processResources {
     inputs.property "version", project.version
