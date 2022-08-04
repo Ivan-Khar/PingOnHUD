@@ -17,7 +17,7 @@ import static com.aqupd.pingdisplayhud.config.Configuration.*;
 public class ConfigGUIRenderer extends GuiScreen {
   GuiSlider redColorSlider, greenColorSlider, blueColorSlider, positionXSlider, positionYSlider, bgdOpacitySlider;
   GuiButton xAxisAlignButton, yAxisAlignButton, visibilityButton;
-  GuiTextField prefixField, suffixField;
+  GuiTextField prefixField, suffixField, pingAccuracyField;
   long time = 0L;
 
   @Override
@@ -42,8 +42,9 @@ public class ConfigGUIRenderer extends GuiScreen {
     visibilityButton = new GuiButton(122, xAxisAlignButton.xPosition + 101, xAxisAlignButton.yPosition, 100, 20, "Visibility: " + isVisible());
     yAxisAlignButton = new GuiButton(123, visibilityButton.xPosition + 101, visibilityButton.yPosition, 100, 20, "Y Alignment: " + (isyAxis() ? "bottom" : "top"));
 
-    prefixField = new GuiTextField(131, mc.fontRendererObj, xAxisAlignButton.xPosition + 49, xAxisAlignButton.yPosition + 23, 100, 16);
-    suffixField = new GuiTextField(131, mc.fontRendererObj, prefixField.xPosition + 152, prefixField.yPosition, 100, 16);
+    prefixField = new GuiTextField(131, mc.fontRendererObj, xAxisAlignButton.xPosition + 49, xAxisAlignButton.yPosition + 23, 50, 16);
+    suffixField = new GuiTextField(132, mc.fontRendererObj, prefixField.xPosition + 102, prefixField.yPosition, 50, 16);
+    pingAccuracyField = new GuiTextField(133, mc.fontRendererObj, suffixField.xPosition + 102, suffixField.yPosition, 50, 16);
 
     buttonList.add(redColorSlider);   buttonList.add(greenColorSlider);  buttonList.add(blueColorSlider);
     buttonList.add(positionXSlider);  buttonList.add(positionYSlider);   buttonList.add(bgdOpacitySlider);
@@ -51,6 +52,7 @@ public class ConfigGUIRenderer extends GuiScreen {
 
     prefixField.setVisible(true); prefixField.setFocused(false); prefixField.setEnabled(true); prefixField.setMaxStringLength(32); prefixField.setText(getSuffix());
     suffixField.setVisible(true); suffixField.setFocused(false); suffixField.setEnabled(true); suffixField.setMaxStringLength(32); suffixField.setText(getPrefix());
+    pingAccuracyField.setVisible(true); pingAccuracyField.setFocused(false); pingAccuracyField.setEnabled(true); pingAccuracyField.setMaxStringLength(6); pingAccuracyField.setText(getPingAccuracy()); pingAccuracyField.setValidator(input -> input.matches("[0-9]+") || input.length() == 0);
 
     mc.mouseHelper.ungrabMouseCursor();
     super.initGui();
@@ -72,10 +74,14 @@ public class ConfigGUIRenderer extends GuiScreen {
     drawTexturedModalRect(sr.getScaledWidth()/2 + 31, sr.getScaledHeight() - 128, 4, 0, 62, 158);
     drawTexturedModalRect(sr.getScaledWidth()/2 + 93, sr.getScaledHeight() - 128, 4, 0, 62, 158);
     drawTexturedModalRect(sr.getScaledWidth()/2 + 155, sr.getScaledHeight() - 128, 66, 0, 4, 158);
+
     fontRendererObj.drawString("Ping customizer", (sr.getScaledWidth()/2) - (fontRendererObj.getStringWidth("Ping customizer")/2), sr.getScaledHeight() - 120, getDecFromColor(63, 63, 63));
-    fontRendererObj.drawString("Prefix:", redColorSlider.xPosition + 8, prefixField.yPosition + 4, getDecFromColor(31, 31, 31));
-    fontRendererObj.drawString("Suffix:", positionXSlider.xPosition + 8, prefixField.yPosition + 4, getDecFromColor(31, 31, 31));
-    prefixField.drawTextBox(); suffixField.drawTextBox();
+
+    prefixField.drawTextBox(); suffixField.drawTextBox(); pingAccuracyField.drawTextBox();
+    fontRendererObj.drawString("Prefix:", prefixField.xPosition - 40, prefixField.yPosition + 4, getDecFromColor(31, 31, 31));
+    fontRendererObj.drawString("Suffix:", suffixField.xPosition - 40, suffixField.yPosition + 4, getDecFromColor(31, 31, 31));
+    fontRendererObj.drawString("Ping acc.:", pingAccuracyField.xPosition - 48, pingAccuracyField.yPosition + 4, getDecFromColor(31, 31, 31));
+
     super.drawScreen(mouseX, mouseY, partialTicks);
   }
 
@@ -84,13 +90,13 @@ public class ConfigGUIRenderer extends GuiScreen {
     super.actionPerformed(button);
     switch(button.id){
       case 121:
-        setxAxis(!isxAxis());
+        setXAxis(!isxAxis());
         break;
       case 122:
         setVisible(!isVisible());
         break;
       case 123:
-        setyAxis(!isyAxis());
+        setYAxis(!isyAxis());
     }
   }
 
@@ -100,10 +106,17 @@ public class ConfigGUIRenderer extends GuiScreen {
     if(isMouseOver(mouseX, mouseY, prefixField.xPosition, prefixField.yPosition, 100, 16)) {
       prefixField.setFocused(true);
       suffixField.setFocused(false);
+      pingAccuracyField.setFocused(true);
     }
     if(isMouseOver(mouseX, mouseY, suffixField.xPosition, suffixField.yPosition, 100, 16)) {
       prefixField.setFocused(false);
       suffixField.setFocused(true);
+      pingAccuracyField.setFocused(true);
+    }
+    if(isMouseOver(mouseX, mouseY, pingAccuracyField.xPosition, pingAccuracyField.yPosition, 100, 16)) {
+      prefixField.setFocused(false);
+      suffixField.setFocused(false);
+      pingAccuracyField.setFocused(true);
     }
   }
 
@@ -118,6 +131,10 @@ public class ConfigGUIRenderer extends GuiScreen {
     if (suffixField.isFocused()) {
       suffixField.textboxKeyTyped(typedChar, keyCode);
       setSuffix(suffixField.getText());
+    }
+    if (pingAccuracyField.isFocused()) {
+      pingAccuracyField.textboxKeyTyped(typedChar, keyCode);
+      setPingAccuracy(pingAccuracyField.getText());
     }
   }
 }

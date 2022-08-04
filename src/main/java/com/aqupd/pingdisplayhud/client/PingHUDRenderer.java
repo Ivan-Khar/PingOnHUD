@@ -1,6 +1,5 @@
 package com.aqupd.pingdisplayhud.client;
 
-import com.aqupd.pingdisplayhud.config.Configuration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import static com.aqupd.pingdisplayhud.utils.Methods.*;
 import static com.aqupd.pingdisplayhud.utils.Variables.*;
 import static com.aqupd.pingdisplayhud.config.Configuration.*;
-public class PingOnHUDRenderer {
+public class PingHUDRenderer {
   public static void render() {
     Minecraft mc = Minecraft.getMinecraft();
     Tessellator tes = Tessellator.getInstance();
@@ -26,7 +25,8 @@ public class PingOnHUDRenderer {
     int halfwidth = sr.getScaledWidth()/2;
     int halfheight = sr.getScaledHeight()/2;
 
-    String text = getPrefix() + ping + getSuffix();
+    long pingAccuracy = getPingAccuracy().length() == 0 ? 0 : Long.parseLong(getPingAccuracy());
+    String text = getPrefix() + (ping == 0 ? 0 : ping - pingAccuracy) + getSuffix();
     long guiWidth = mc.fontRendererObj.getStringWidth(text) + 3;
     long guiHeight = 11;
 
@@ -69,5 +69,6 @@ public class PingOnHUDRenderer {
     GlStateManager.disableBlend();
 
     mc.fontRendererObj.drawString(text, guiX + 2, guiY + 2, getDecFromColor(getRedColor(), getGreenColor(), getBlueColor()), false);
+    GlStateManager.color(255, 255, 255, 255);
   }
 }

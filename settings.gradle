@@ -22,6 +22,9 @@ pluginManagement {
         case 'net.minecraftforge.gradle.forge':
           useModule "com.github.asbyth:ForgeGradle:${requested.version}"
           break
+        //case 'org.spongepowered.mixin':
+        //  useModule "com.github.xcfrg:MixinGradle:${requested.version}"
+        //  break
       }
     }
   }

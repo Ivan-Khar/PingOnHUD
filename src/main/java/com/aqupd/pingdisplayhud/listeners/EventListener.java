@@ -1,10 +1,11 @@
 package com.aqupd.pingdisplayhud.listeners;
 
 import com.aqupd.pingdisplayhud.client.config.ConfigGUIRenderer;
-import com.aqupd.pingdisplayhud.client.PingOnHUDRenderer;
+import com.aqupd.pingdisplayhud.client.PingHUDRenderer;
 import com.aqupd.pingdisplayhud.threads.PingThread;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -43,7 +44,7 @@ public class EventListener {
       if (!isThreadRunning && shouldStartThread) {
         shouldCloseThread = false;
         shouldStartThread = false;
-        new PingThread(address.split(":", 2));
+        new PingThread(address.split(":", 2), event);
       }
     }
     if(opengui != -1 && (System.currentTimeMillis() - opengui) > 250) {
@@ -56,7 +57,7 @@ public class EventListener {
   @SubscribeEvent
   public void onGuiRenderEvent(RenderGameOverlayEvent.Pre event) {
     if (event.type == RenderGameOverlayEvent.ElementType.BOSSHEALTH && isVisible()) {
-      PingOnHUDRenderer.render();
+      PingHUDRenderer.render();
     }
   }
 }
