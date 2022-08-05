@@ -50,8 +50,8 @@ public class ConfigGUIRenderer extends GuiScreen {
     buttonList.add(positionXSlider);  buttonList.add(positionYSlider);   buttonList.add(bgdOpacitySlider);
     buttonList.add(xAxisAlignButton); buttonList.add(yAxisAlignButton);  buttonList.add(visibilityButton);
 
-    prefixField.setVisible(true); prefixField.setFocused(false); prefixField.setEnabled(true); prefixField.setMaxStringLength(32); prefixField.setText(getSuffix());
-    suffixField.setVisible(true); suffixField.setFocused(false); suffixField.setEnabled(true); suffixField.setMaxStringLength(32); suffixField.setText(getPrefix());
+    prefixField.setVisible(true); prefixField.setFocused(false); prefixField.setEnabled(true); prefixField.setMaxStringLength(32); prefixField.setText(getPrefix());
+    suffixField.setVisible(true); suffixField.setFocused(false); suffixField.setEnabled(true); suffixField.setMaxStringLength(32); suffixField.setText(getSuffix());
     pingAccuracyField.setVisible(true); pingAccuracyField.setFocused(false); pingAccuracyField.setEnabled(true); pingAccuracyField.setMaxStringLength(6); pingAccuracyField.setText(getPingAccuracy()); pingAccuracyField.setValidator(input -> input.matches("[0-9]+") || input.length() == 0);
 
     mc.mouseHelper.ungrabMouseCursor();

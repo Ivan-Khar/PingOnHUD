@@ -26,7 +26,7 @@ public class PingHUDRenderer {
     int halfheight = sr.getScaledHeight()/2;
 
     long pingAccuracy = getPingAccuracy().length() == 0 ? 0 : Long.parseLong(getPingAccuracy());
-    String text = getPrefix() + (ping == 0 ? 0 : ping - pingAccuracy) + getSuffix();
+    String text = getPrefix().replace("&", "§") + (ping == 0 ? 0 : ping - pingAccuracy) + getSuffix().replace("&", "§");
     long guiWidth = mc.fontRendererObj.getStringWidth(text) + 3;
     long guiHeight = 11;
 

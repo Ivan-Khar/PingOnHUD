@@ -1,16 +1,13 @@
 package com.aqupd.pingdisplayhud.threads;
 
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.client.network.OldServerPinger;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.List;
 
 import static com.aqupd.pingdisplayhud.utils.Variables.*;
 
-public class PingThread{
+public class PingThread {
   String ip;
   TickEvent.PlayerTickEvent event;
   public PingThread(String ip, TickEvent.PlayerTickEvent ev){
