@@ -106,7 +106,7 @@ public class ConfigGUIRenderer extends GuiScreen {
     if(isMouseOver(mouseX, mouseY, prefixField.xPosition, prefixField.yPosition, 100, 16)) {
       prefixField.setFocused(true);
       suffixField.setFocused(false);
-      pingAccuracyField.setFocused(true);
+      pingAccuracyField.setFocused(false);
     }
     if(isMouseOver(mouseX, mouseY, suffixField.xPosition, suffixField.yPosition, 100, 16)) {
       prefixField.setFocused(false);
